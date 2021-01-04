@@ -5,12 +5,12 @@ class ListsController < ApplicationController
   def index
     @lists = List.all
 
-    render json: @lists
+    render json: @lists.as_json(include:{items:{only:[:item_name, :item_price, :item_rating, :item_store, :link, :image, :list_id]}})
   end
 
   # GET /lists/1
   def show
-    render json: @list
+    render json: @list.as_json(include:{items:{only:[:item_name, :item_price, :item_rating, :item_store, :link, :image, :list_id]}})
   end
 
   # POST /lists
@@ -36,6 +36,7 @@ class ListsController < ApplicationController
   # DELETE /lists/1
   def destroy
     @list.destroy
+    render json: @list
   end
 
   private
